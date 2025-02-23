@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    
+    <!-- Подключение Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+
+    <!-- Подключение стили -->
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Даша Лысак ❤️ Помощь в лечении</title>
+</head>
+<body>
+    <div class="container">
+        <div class="main-section">
+            <!-- Блок основной текстовой информации (Имя, город, диагноз) -->
+            <div class="block-name">
+                <h3>#Первоуральск, Свердловская область</h3>
+                <h1>Даша Лысак,<br> 3 года</h1>
+                <h2><strong>Диагноз: </strong>эпилептическая энцефалопатия, фокальная эпилепсия фармакорезистентная, ДЦП, спастический тетрапарез</h2>
+
+                <div class="progress-container">
+                    <h2>Сбор средств</h2>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 30%;"></div> <!-- Пример: 30% собрано -->
+                        <div class="progress-percent">30%</div> <!-- Процент отображается поверх прогресс-бара -->
+                    </div>
+                    <div class="progress-text">
+                        <span>Собрано: 1,608,158 ₽</span>
+                        <span>Цель: 5,360,526 ₽</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Разметка слайдера -->
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="images/photos/photo1.jpg" alt="Фото 1">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/photos/photo2.jpg" alt="Фото 2">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/photos/photo3.jpg" alt="Фото 3">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/photos/photo4.jpg" alt="Фото 3">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/photos/photo5.jpg" alt="Фото 3">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/photos/photo6.jpg" alt="Фото 3">
+                    </div>
+                </div>
+                
+                <!-- Кнопки навигации -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                
+                <!-- Пагинация -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="section-history-with-donation">
+
+            <div class="section-donation-and-documents">
+                <!-- Виджет для оплаты-->
+                <div class="donation-widget">
+                    <h1 class="donation-title">Помочь Даше</h1>
+                    <p class="donation-title">Цель сбора: оплата обследования</p>
+                    
+                    <div class="payment-methods">
+                        <button class="method-btn" onclick="toggleButton(this)">
+                            <img src="images/icons/sbp.png" alt="IO Money">
+                        </button>
+                        <button class="method-btn" onclick="toggleButton(this)">
+                            <img src="images/icons/sberpay2.svg" alt="SberPay">
+                        </button>
+                        <button class="method-btn" onclick="toggleButton(this)">
+                            <img src="images/icons/tbank-full.png" alt="IO Money">
+                        </button>
+                        <button class="method-btn" onclick="toggleButton(this)">
+                            <img src="images/icons/visa.svg" alt="Visa">
+                        </button>
+                        <button class="method-btn" onclick="toggleButton(this)">
+                            <img src="images/icons/iomoney.svg" alt="IO Money">
+                        </button>
+                        <button class="method-btn" onclick="toggleButton(this)">
+                            <img src="images/icons/usdt.png" alt="Visa">
+                        </button>
+                    </div>
+            
+                    <input type="number" placeholder="Сумма пожертвования">
+                    <input type="email" placeholder="Ваш E-mail">
+                    
+                    <button class="donate-btn">Помочь</button>
+                    
+                    <p class="note">
+                        Нажимая на кнопку, вы принимаете условия
+                        <a href="oferta.html">публичной оферты</a>
+                        и даете согласие на
+                        <a href="consent.html">обработку персональных данных</a>.
+                    </p>
+                </div>
+
+                <h1>Документы</h1>
+                <div class="section-documents">
+                    
+                    <!-- Кнопка для открытия документа -->
+                    <button class="document-button" onclick="openModal()">
+                        <img src="images/icons/docs.svg" alt="Документ">
+                    </button>
+
+                    <!-- Всплывающее окно -->
+                    <div id="documentModal" class="modal">
+                        <div class="modal-content">
+                            <img src="images/docs/docs1.jpg" alt="Скан документа">
+                            <button class="close-button" onclick="closeModal()">Закрыть</button>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка для открытия документа -->
+                    <button class="document-button" onclick="openModal()">
+                        <img src="images/icons/docs.svg" alt="Документ">
+                    </button>
+
+                    <!-- Всплывающее окно -->
+                    <div id="documentModal" class="modal">
+                        <div class="modal-content">
+                            <img src="images/docs/docs2.jpg" alt="Скан документа">
+                            <button class="close-button" onclick="closeModal()">Закрыть</button>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка для открытия документа -->
+                    <button class="document-button" onclick="openModal()">
+                        <img src="images/icons/docs.svg" alt="Документ">
+                    </button>
+
+                    <!-- Всплывающее окно -->
+                    <div id="documentModal" class="modal">
+                        <div class="modal-content">
+                            <img src="images/docs/docs3.jpg" alt="Скан документа">
+                            <button class="close-button" onclick="closeModal()">Закрыть</button>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка для открытия документа -->
+                    <button class="document-button" onclick="openModal()">
+                        <img src="images/icons/docs.svg" alt="Документ">
+                    </button>
+
+                    <!-- Всплывающее окно -->
+                    <div id="documentModal" class="modal">
+                        <div class="modal-content">
+                            <img src="images/docs/docs4.jpg" alt="Скан документа">
+                            <button class="close-button" onclick="closeModal()">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h1>Новостные репортажи</h1>
+                <div class="section-news">
+                    <a href="https://www.zg66.ru/publications/history-blog/11852-2021-11-18-04-47-07.html#bounce"
+                    target="_blank">Золотая горка</a>
+                    <a href="https://help-children.net/campaign/dasha-lysak/"
+                    target="_blank">Ты ему нужен</a>
+                    <a href="https://aleshafond.ru/children/dasa-lysak"
+                    target="_blank">Алёша Фонд</a>
+                </div>
+            </div>
+            
+
+            <div class="history-right-donation">
+                <h1>История Даши</h1>
+                <p>Даша Лысак — первая из монохориальной двойни, родившаяся на 32 неделе беременности.
+                    При рождении у неё была гипоксия третьей степени. Поначалу врачи уверяли,
+                    что всё будет хорошо, но позже сказали:</p>
+                
+                <blockquote>
+                    <p>Ребёнок — это не математика, и точный прогноз дать невозможно.</p>
+                </blockquote>
+
+                <p>Однако в четыре месяца у неё началась эпилепсия,
+                    и постепенно навыки начали ухудшаться.
+                    В год после поездки на море Даша начала переворачиваться, как юла.
+                    Но через два месяца вся семья переболела гриппом, и у Даши произошёл регресс,
+                    и этот навык утратился.</p>
+
+                <p>Каждые три месяца и чаще Даша проходила реабилитацию разного уровня.
+                    С четырёх лет, когда по ОМС перестали принимать в стационары,
+                    она начала ездить в платные центры.</p>
+
+                <p>Долгое время приступы не удавалось купировать.
+                    Лишь в мае 2022 года это удалось сделать в клинике Текнон в Испании.
+                    С этого времени Даша начала постепенно развиваться.
+                    Появилась эмоциональная связь с близкими, и она начала говорить первые слова.</p>
+                
+                <blockquote>
+                <p>«Сейчас Даша может сидеть с опорой на руки уже несколько минут без поддержки.
+                    Она опирается на ноги и играет с игрушками.
+                    Она играет с зайкой Алило, погремушками и теми предметами, до которых может дотянуться.
+                    Всем своим видом она показывает, как анализирует ощущения в своём теле.» 
+                    — делится Татьяна, мама Даши</p>
+                </blockquote>
+
+                <p>Даша носит корсет, ортезы на голеностоп и аппарат на всё тело и туловище.
+                    Она пользуется специализированной коляской дома и на улице, а также вертикализатором.
+                    Она проходит курсы реабилитации в своём городе, на выезде и занятия дома.</p>
+
+                <p>Даша живёт в многодетной семье и очень радуется, когда сестрёнки возвращаются 
+                    домой и играют с ней, разговаривают с ней. Прошлым летом она научилась понимать 
+                    слово «плыть» и поплыла. Приехав домой, этот навык закрепился. 
+                    В этом году после дорогостоящего курса реабилитации у неё появился шаговый рефлекс,
+                     и она пошла с опорой.</p>
+                    
+            </div>
+        </div>
+
+        <hr>
+        
+        <div class="table-container">
+            <h1>Полная перечень нужд Даши</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Наименование</th>
+                        <th>Количество</th>
+                        <th>Цена (₽)</th>
+                        <th>Сумма (₽)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Смесь Малоежка</td>
+                        <td>48 шт</td>
+                        <td>1,059 ₽/шт</td>
+                        <td>50,832 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Масло MCT</td>
+                        <td>15 шт</td>
+                        <td>1,600 ₽/шт</td>
+                        <td>24,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Масло CBD</td>
+                        <td>15 шт</td>
+                        <td>16,000 ₽/шт</td>
+                        <td>240,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Смесь Кетокал</td>
+                        <td>75 банок</td>
+                        <td>6,332 ₽/банка</td>
+                        <td>474,900 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Москва: консультация Вельтищево, перелёт, проживание 1 сут</td>
+                        <td>1</td>
+                        <td>70,000 ₽</td>
+                        <td>70,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Анализы на дефициты</td>
+                        <td>2 раза в год</td>
+                        <td>15,000 ₽</td>
+                        <td>30,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>УГМК: ВЭЭГ</td>
+                        <td>1</td>
+                        <td>18,000 ₽</td>
+                        <td>18,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>УГМК: эпилептолог</td>
+                        <td>1</td>
+                        <td>6,200 ₽</td>
+                        <td>6,200 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>УГМК: консультация нейродиетолога Чистяковой</td>
+                        <td>1</td>
+                        <td>15,000 ₽</td>
+                        <td>15,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Увлажнитель</td>
+                        <td>1</td>
+                        <td>30,000 ₽</td>
+                        <td>30,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Особенная одежда (комбинезон зимний, демисезон, летний, угги)</td>
+                        <td>1 комплект</td>
+                        <td>34,000 ₽</td>
+                        <td>34,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Вертикализатор/кресло Баффин</td>
+                        <td>1</td>
+                        <td>685,950 ₽</td>
+                        <td>685,950 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Коляска для активного образа жизни с креплением к велосипеду</td>
+                        <td>1</td>
+                        <td>650,044 ₽</td>
+                        <td>650,044 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Реабилитация на дом (массаж, логопед, ЛФК, дефектолог, сенсорика, няня)</td>
+                        <td>12 месяцев</td>
+                        <td>126,000 ₽/мес</td>
+                        <td>1,512,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Реабилитация выездная (Июнь)</td>
+                        <td>1</td>
+                        <td>550,000 ₽</td>
+                        <td>550,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Реабилитация выездная (Осень)</td>
+                        <td>1</td>
+                        <td>298,800 ₽ + 25,000 ₽ (авиабилеты)</td>
+                        <td>323,800 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Реабилитация выездная (Весна)</td>
+                        <td>1</td>
+                        <td>298,800 ₽ + 25,000 ₽ (авиабилеты)</td>
+                        <td>323,800 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Костюм Фаэтон (следующий размер)</td>
+                        <td>1</td>
+                        <td>35,000 ₽</td>
+                        <td>35,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Изготовление ортезов</td>
+                        <td>2 шт</td>
+                        <td>18,000 ₽/шт</td>
+                        <td>36,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Корсет</td>
+                        <td>1</td>
+                        <td>75,000 ₽</td>
+                        <td>75,000 ₽</td>
+                    </tr>
+                    <tr>
+                        <td>Подгузники</td>
+                        <td>24 уп/год</td>
+                        <td>1,500 ₽/уп</td>
+                        <td>36,000 ₽</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="3">Итого:</td>
+                        <td class="total-amount">5,360,526 ₽</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <hr>
+
+        
+        <footer class="footer">
+            <div class="footer-container">
+                <!-- Форма обратной связи -->
+                <div class="feedback-form">
+                    <h3>Обратная связь</h3>
+                    <form>
+                        <input type="text" placeholder="Ваше имя" required>
+                        <input type="email" placeholder="Ваш E-mail" required>
+                        <textarea placeholder="Ваше сообщение" rows="3" required></textarea>
+                        <button type="submit" class="submit-btn">Отправить</button>
+                    </form>
+                </div>
+        
+                <!-- Блок с информацией футера -->
+                <div class="footer-info">
+        
+                    <div class="footer-section">
+                        <h3>О проекте</h3>
+                        <p>Сбор средств Даше Лысак происходит в рамках проекта, реализуемого на YouTube.
+                            <br>Целью проекта является продюсирование обыкновенного камня, который, в случае успеха (становления популярным),
+                             сможет положительно влять на судьбы других людей.
+                            <br>И первый человек, которому герой эксперимента и его аудитория могут помочь — Даша Лысак!
+                            <br><br>Мы — авторы проект — искренне надеемся, что история маленькой Даши не оставит вас равнодошными!
+                            И искренне желаем здоровья каждому!
+                        </p>
+
+                        <h3>Ссылки на проект</h3>
+                        <div class="social-links">
+                            <a href="https://www.youtube.com/@bydniyoutubera/" aria-label="YouTube" target="_blank">
+                                <img src="images/icons/youtube.png" alt="YouTube">YouTube
+                            </a>
+                            <a href="https://t.me/popular_stone" aria-label="Telegram" target="_blank">
+                                <img src="images/icons/telegram.png" alt="YouTube">Telegram
+                            </a>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        
+            <!-- Копирайт -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 Татьяна Лысак. Все права защищены.</p>
+            </div>
+        </footer>
+
+
+    </div>
+
+
+    <!-- Скрипты -->
+    <!-- Скрипт Progress Bar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalAmount = 5360526; // Общая сумма
+            const collectedAmount = 4608158; // Собрано
+            const progress = (collectedAmount / totalAmount) * 100;
+
+            const progressFill = document.querySelector('.progress-bar-fill');
+            const progressPercent = document.querySelector('.progress-percent');
+
+            progressFill.style.width = `${progress}%`;
+            progressPercent.textContent = `${Math.round(progress)}%`;
+
+            const progressText = document.querySelector('.progress-text');
+            progressText.innerHTML = `
+                <span>Собрано: ${collectedAmount.toLocaleString()} ₽</span>
+                <span>Цель: ${totalAmount.toLocaleString()} ₽</span>
+            `;
+        });
+    </script>
+
+    <!-- Скрипт слайдера фотографий -->
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            }
+        });
+    </script>
+
+    <!-- Скрипт открытия модального окна для ДОКУМЕНТОВ -->
+    <script>
+        // Функция для открытия модального окна
+        function openModal() {
+            document.getElementById('documentModal').style.display = 'flex';
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            document.getElementById('documentModal').style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике вне его области
+        window.onclick = function(event) {
+            const modal = document.getElementById('documentModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+    <script>
+        document.querySelectorAll('.payment-methods').forEach(widget => {
+            widget.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('method-btn')) return;
+                
+                const buttons = widget.querySelectorAll('.method-btn');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
+                
+                e.target.classList.add('active');
+                e.target.setAttribute('aria-pressed', 'true');
+            });
+        });  
+    </script>
+</body>
+</html>
