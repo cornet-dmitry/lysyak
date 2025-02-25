@@ -32,8 +32,9 @@
                         <div class="progress-percent">30%</div> <!-- Процент отображается поверх прогресс-бара -->
                     </div>
                     <div class="progress-text">
-                        <span>Собрано: 1,608,158 ₽</span>
-                        <span>Цель: 5,360,526 ₽</span>
+                        <span>Собрано: {{ collected_amount }}
+                        </span>
+                        <span>Цель: {{ total_amount }}</span>
                     </div>
                 </div>
             </div>
@@ -239,7 +240,7 @@
         <hr>
         
         <div class="table-container">
-            <h1>Полная перечень нужд Даши</h1>
+            <h1>Полный перечень нужд Даши</h1>
             <table>
                 <thead>
                     <tr>
@@ -391,13 +392,14 @@
         
         <footer class="footer">
             <div class="footer-container">
+
                 <!-- Форма обратной связи -->
                 <div class="feedback-form">
                     <h3>Обратная связь</h3>
                     <form action="{{ url_for('handle_feedback') }}" method="POST">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="text" name="name" placeholder="Ваше имя" required>
-                        <input type="email" name="email" placeholder="Ваш E-mail" required>
+                        <input type="text" name="email" placeholder="Удобный контакт для связи" required>
                         <textarea name="message" placeholder="Ваше сообщение" rows="3" required></textarea>
                         <button type="submit" class="submit-btn">Отправить</button>
                     </form>
@@ -445,8 +447,8 @@
     <!-- Скрипт Progress Bar -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const totalAmount = 5360526; // Общая сумма
-            const collectedAmount = 4608158; // Собрано
+            const totalAmount = {{ total_amount }}; // Общая сумма
+            const collectedAmount = {{ collected_amount }}; // Собрано
             const progress = (collectedAmount / totalAmount) * 100;
 
             const progressFill = document.querySelector('.progress-bar-fill');

@@ -2,6 +2,8 @@ import requests
 import base64
 import uuid
 
+from datetime import datetime, timedelta
+
 
 # Данные от ЮKassa
 shop_id = '1040120'
@@ -67,3 +69,36 @@ def get_payment_url(amount, email, payment_method):
         return payment_url
     else:
         return ValueError("Что-то пошло не так...")
+    
+
+def get_all_payment():
+    # Параметры запроса
+    end_date = datetime.utcnow()
+    start_date = end_date - timedelta(days=30)  # За последние 30 дней
+
+    # Запрос списка платежей
+    response = requests.get(
+        "https://api.yookassa.ru/v3/payments",
+        headers={
+            "Authorization": f"Basic {auth}",
+            "Content-Type": "application/json"
+        },
+        params={
+            "created_at.gte": start_date.isoformat() + "Z",
+            "created_at.lt": end_date.isoformat() + "Z",
+            "limit": 100  # Максимальное количество платежей за один запрос
+        }
+    )
+
+    # Обработка ответа
+    if response.status_code == 200:
+        payments = response.json()['items']
+        total_amount = 0
+
+        for payment in payments:
+            if payment['status'] == 'succeeded':
+                total_amount += float(payment['amount']['value'])
+        
+        return total_amount
+    else:
+        return None

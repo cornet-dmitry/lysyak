@@ -1,24 +1,42 @@
-from flask import Flask, render_template, url_for, request, redirect, abort, flash
+from flask import Flask, render_template, url_for, request, redirect, abort, flash, jsonify
+
+from flask_mail import Mail, Message
 from flask_wtf.csrf import CSRFProtect
 
-import smtplib
-from email.mime.text import MIMEText
-from email.header import Header
+import logging
+from yookassa import Configuration, Payment
 
-import secrets
+import requests
+import os
+from dotenv import load_dotenv
 
-from create_payment import get_payment_url
+from create_payment import get_payment_url, get_all_payment
+
+
+# Загружаем переменные из .env
+load_dotenv()
 
 
 app = Flask(__name__)
-app.secret_key = "3b9f8a7c5d6e4f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0"
 
-csrf = CSRFProtect(app)
+app.config['SECRET_KEY'] = os.urandom(24).hex()  # Генерация случайного ключа
+csrf = CSRFProtect(app)  # Включаем CSRF-защиту для всего приложения
+
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Настройка Юкассы
+Configuration.account_id = os.getenv('SHOP_ID')
+Configuration.secret_key = os.getenv('YOOKASSA_SECRET_KEY')
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    collected_amount = get_all_payment() + 1899378
+    total_amount = 5360526
+
+    return render_template('index.html', total_amount=total_amount, collected_amount=collected_amount)
 
 
 @app.route('/donation', methods=['POST', 'GET'])
@@ -49,33 +67,85 @@ def handle_feedback():
         flash('Все поля обязательны для заполнения', 'error')
         return redirect('/')
 
-    # Логика отправки письма
-
-    login = "test-dzen-channel@yandex.ru"
-    password = "sk2-fQJ-6pa-Rsa"
-    finish_email = "cornet.dmitry28@yandex.ru"
-
-    msg = MIMEText(f'{message}', 'plain', 'utf-8')
-    msg['Subject'] = Header(f'Обращение от пользователя {name}', 'utf-8')
-    msg['From'] = login
-    msg['To'] = finish_email
-
-    s = smtplib.SMTP('smtp.yandex.ru', 587, timeout=10)
-
-    try:
-        s.starttls()
-        s.login(login, password)
-        s.sendmail(msg['From'], msg['To'], msg.as_string())
-
-        flash('Ваше сообщение отправлено!', 'success')
-    except Exception as e:
-        print(e)
-        flash(f'Ошибка при отправке сообщения: {str(e)}', 'error')
-        abort(500)
+    send_tg_message(name, email, message)
 
     return redirect('/')
 
-"""
+
+def send_tg_message(name, email, message):
+    # Замените на ваш токен и ID чата
+    TELEGRAM_BOT_TOKEN = os.getenv("BOT_TOKEN")
+    TELEGRAM_CHAT_ID = '709913170'
+
+    # Формируем текст сообщения
+    telegram_message = (
+        f"Получено новое обращение от {name}\n"
+        f"Контакт отправлителя: {email}\n\n"
+        f"Текст обращения:\n{message}"
+    )
+
+    # URL для отправки сообщения через Telegram Bot API
+    url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
+
+    # Параметры запроса
+    payload = {
+        'chat_id': TELEGRAM_CHAT_ID,
+        'text': telegram_message
+    }
+
+    # Отправляем POST-запрос
+    try:
+        response = requests.post(url, data=payload)
+        response.raise_for_status()  # Проверяем, что запрос выполнен успешно
+        return True
+    except requests.exceptions.RequestException as e:
+        print(f"Ошибка при отправке сообщения в Telegram: {e}")
+        return False
+    
+
+@app.route('/webhook', methods=['POST'])
+@csrf.exempt  # Отключаем CSRF для этого маршрута
+def yookassa_webhook():
+    """Обрабатывает уведомления от Юкассы."""
+    data = request.json
+   
+    print("Заголовки запроса:", request.headers)  # Логируем заголовки
+    print("Тело запроса:", request.data)  # Логируем сырые данные
+
+    # Логируем полученные данные
+    logger.info(f"Получено уведомление от Юкассы: {data}")
+
+    # Проверяем, что это уведомление о платеже
+    if 'object' in data and data['object'].get('status') == 'waiting_for_capture':
+        payment_id = data['object']['id']
+
+        # Автоподтверждение платежа
+        try:
+            payment = Payment.capture(payment_id)
+            logger.info(f"Платеж {payment_id} подтвержден: {payment}")
+
+            # Отправляем уведомление в Telegram
+            amount = payment.amount.value
+            currency = payment.amount.currency
+
+            # Извлекаем email из metadata
+            metadata = data.get('object', {}).get('metadata', {})
+            email = metadata.get('email')
+
+            message = (
+                f"✅ Платеж подтвержден!\n"
+                f"ID платежа: {payment_id}\n"
+                f"Сумма: {amount} {currency}"
+            )
+            send_tg_message("СЛУЖЕБНОЕ", email, message)
+
+        except Exception as e:
+            logger.error(f"Ошибка при подтверждении платежа {payment_id}: {e}")
+            send_tg_message(f"❌ Ошибка при подтверждении платежа {payment_id}: {e}")
+
+    return jsonify({'status': 'ok'}), 200
+    
+
 # Обработчик для ошибки 404 (страница не найдена)
 @app.errorhandler(404)
 def page_not_found(error):
@@ -107,7 +177,7 @@ def bad_request(error):
         error_message="Ваш запрос не может быть обработан. Проверьте введённые данные.",
         error_code=400
     ), 400
-"""
+
 
 if __name__ == "__main__":
     app.run(debug=True)
